@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/angular/angular-animate.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <script src="js/model/TaskModel.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+
+    <body ng-app="starter">
+    <ion-pane ng-controller="mainController">
+            <ion-header-bar class="bar-positive">
+              <h1 class="title">Ionic Tasks</h1>
+               <button class="button icon ion-plus-round" ng-click="onItemAdd()"></button>
+            </ion-header-bar>
+
+            <ion-footer-bar class="bar bar-footer bar-positive">
+
+              <div class="row center">
+                <div class="col col-80"><strong>View completed tasks</strong></div>
+
+                  <label class="col col-20 toggle">
+                     <input type="checkbox" ng-model="viewCompletedTasks">
+                     <div class="track">
+                       <div class="handle"></div>
+                     </div>
+                  </label>
+
+
+            </div>
+            </ion-footer-bar>
+
+            <ion-content>
+
+              <ion-list ng-repeat="task in tasks track by $index" ng-hide="showItens(task)" show-delete="false" can-swipe="true">
+                <ion-item>
+
+                  <div class="row" >
+                    <div class="col col-10">
+                      <label class="checkbox checkbox-balanced">
+                    	  <input type="checkbox" ng-model="isChecked"
+                          ng-change="onCheckChanged(task, isChecked)"
+                          ng-init='isChecked=task.finalizada'>
+                        </input>
+                    	</label>
+                    </div>
+
+                    <div class="col col-90">
+                      <div class="item-text-center item-text-wrap item-padding-left">{{task.nome}}</div>
+                    </div>
+                  </div>
+
+                    <ion-option-button class="button-assertive icon ion-trash-a" ng-click="onItemRemove(task)"></ion-option-button>
+                    <ion-option-button class="button-positive icon ion-edit" ng-click="onItemEdit(task)"></ion-option-button>
+
+                </ion-item>
+              </ion-list>
+
+          </ion-content>
+    </ion-pane>
+  </body>
+</html>
